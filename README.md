@@ -5,7 +5,7 @@ Insatll Ansible Node.
 
 Install SSH on Kubernetis nodes.
 
-generate ssh-keys on local machine and copying the pub key to vm's
+Generate ssh-keys on local machine and copying the pub key to vm's
 
 ```
 ssh-keygen -t rsa
@@ -21,7 +21,7 @@ ansible all -i /etc/ansible/inventory.ini -m ping
 
 
 
-# Prevent Installation of RKE2 Built-in Nginx Ingress RKE2 
+# Prevent Installation of RKE2 Built-in Nginx Ingress
 
 create file name on /etc/rancher/rke2/: config.yaml
 

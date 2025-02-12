@@ -4,15 +4,19 @@
 Insatll Ansible Node.
 Install SSH on Kubernetis nodes.
 
-
 generate ssh-keys on local machine and copying the pub key to vm's
-	ssh-keygen -t rsa
+
+```
+ssh-keygen -t rsa
 
 ssh-copy-id username@vm-ip-address
+```
 
 create file name on /etc/ansible: inventory.ini with the vm's ip.
 
+```
 ansible all -i /etc/ansible/inventory.ini -m ping
+```
 
 
 
@@ -22,26 +26,23 @@ create file name on /etc/rancher/rke2/: config.yaml
 
 
 
-##############################################################################
-############################## RKE2 Install ##################################
-##############################################################################
+# RKE2 Install
 
-Server Node Installation
-------------------------
+## Server Node Installation
 
-curl -sfL https://get.rke2.io | INSTALL_RKE2_TYPE="server" sh -
+`curl -sfL https://get.rke2.io | INSTALL_RKE2_TYPE="server" sh -`
 
-systemctl enable rke2-server.service
-systemctl start rke2-server.service
-systemctl status rke2-server.service
+`systemctl enable rke2-server.service`
+`systemctl start rke2-server.service`
+`systemctl status rke2-server.service`
 
 
-Linux Agent (Worker) Node Installation
---------------------------------------
+## Linux Agent (Worker) Node Installation
 
-curl -sfL https://get.rke2.io | INSTALL_RKE2_TYPE="agent" sh -
+`curl -sfL https://get.rke2.io | INSTALL_RKE2_TYPE="agent" sh -`
 
-mkdir -p /etc/rancher/rke2/
+`mkdir -p /etc/rancher/rke2/`
+
 cat << EOF > /etc/rancher/rke2/config.yaml
 token: <token from first server node>  (path to token on server /var/lib/rancher/rke2/server/node-token) # Use the same token on all nodes
 tls-san:

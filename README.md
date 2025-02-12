@@ -68,7 +68,7 @@ systemctl start rke2-agent.service
 
 ## Install additional Server Node
 
-````
+```
 curl -sfL https://get.rke2.io | INSTALL_RKE2_TYPE="server" sh -
 
 mkdir -p /etc/rancher/rke2/

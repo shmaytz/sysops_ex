@@ -1,7 +1,5 @@
 
-####################################################################################
-################################ Ansible Install ###################################
-####################################################################################
+# Ansible Install 
 
 Insatll Ansible Node.
 Install SSH on Kubernetis nodes.
@@ -18,9 +16,7 @@ ansible all -i /etc/ansible/inventory.ini -m ping
 
 
 
-###################################################################################
-########### Prevent Installation of RKE2 Built-in Nginx Ingress RKE2 ##############
-###################################################################################
+# Prevent Installation of RKE2 Built-in Nginx Ingress RKE2 
 
 create file name on /etc/rancher/rke2/: config.yaml
 

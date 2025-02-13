@@ -3,7 +3,7 @@ prometheus:
     storageSpec:
       volumeClaimTemplate:
         spec:
-          storageClassName: k8s-sc
+          storageClassName: k8s-sc  # Your correct NFS storage class
           accessModes: ["ReadWriteOnce"]
           resources:
             requests:
@@ -14,17 +14,18 @@ prometheus:
 
   ingress:
     enabled: true
-    ingressClassName: nginx
-    paths: ["/prometheus"]
-    pathType: Prefix
+    ingressClassName: nginx  # Ensure Nginx Ingress is used
+    hosts:
+      - "k8s01"
+    paths:
+      - /prom
+    pathType: ImplementationSpecific
+
     annotations:
-      nginx.ingress.kubernetes.io/rewrite-target: /prometheus/$2
-      nginx.ingress.kubernetes.io/use-regex: "true"
+      nginx.ingress.kubernetes.io/rewrite-target: /
       nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
       nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
     tls:
-      - secretName: monitoring-tls
+      - secretName: monitoring-tls  # Ensure the TLS secret exists
         hosts:
-          - 192.168.122.64
-          - 192.168.122.137
-          - 192.168.122.139
+          - k8s01  # Change this to your domain or IP

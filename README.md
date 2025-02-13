@@ -1,5 +1,5 @@
 
-# Ansible Install 
+# 2. Ansible Install 
 
 Insatll Ansible Node.
 
@@ -27,7 +27,7 @@ create file name on /etc/rancher/rke2/: config.yaml
 
 
 
-# RKE2 Install
+# 3. RKE2 Install
 
 ## Server Node Installation
 
@@ -160,7 +160,7 @@ kubectl get pods -A | grep ingress
 
   
   
-# Install HELM 
+# 4. Install HELM 
 
 ```
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
@@ -171,7 +171,7 @@ chmod 700 get_helm.sh
 ```
 
 
-# Install Nginx Ingress with HELM 
+# 4.3.1 Install Nginx Ingress with HELM 
 
 ```
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
@@ -200,7 +200,7 @@ create file name: test-ingress.yaml
 
 
                          
-# Add NFS Storage to the Cluster 
+# 4.3.2 Add NFS Storage to the Cluster 
 
 ## Install NFS Server on the host
 
@@ -228,7 +228,7 @@ sudo apt-get update
 sudo apt-get install nfs-common -y
 ```
 
-## Create Storage Class
+## 4.3.3 Create Storage Class
 
 create file name: rbac.yaml
   

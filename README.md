@@ -253,3 +253,15 @@ kubectl apply -f test-pvc.yaml
 
 kubectl get pvc
 ```
+
+create file name: pvc-inspector.yaml
+
+```
+kubectl apply -f pvc-inspector.yaml
+
+kubectl get pods
+
+kubectl exec -it pvc-inspector -- sh
+
+kubectl cp rbac.yaml pvc-inspector:/data/
+```

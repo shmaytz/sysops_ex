@@ -1,5 +1,7 @@
 
-# 2. Ansible Install 
+# 2. Install PKG
+
+## Ansible Install 
 
 Insatll Ansible Node.
 
@@ -21,15 +23,17 @@ ansible all -i /etc/ansible/inventory.ini -m ping
 
 
 
-# Prevent Installation of RKE2 Built-in Nginx Ingress
+# 3.Install K8s
+
+## Prevent Installation of RKE2 Built-in Nginx Ingress
 
 create file name on /etc/rancher/rke2/: config.yaml
 
 
 
-# 3. RKE2 Install
+## RKE2 Install
 
-## Server Node Installation
+### Server Node Installation
 
 ```
 curl -sfL https://get.rke2.io | INSTALL_RKE2_TYPE="server" sh -
@@ -41,7 +45,7 @@ systemctl start rke2-server.service
 systemctl status rke2-server.service
 ```
 
-## Linux Agent (Worker) Node Installation
+### Linux Agent (Worker) Node Installation
 
 ```
 curl -sfL https://get.rke2.io | INSTALL_RKE2_TYPE="agent" sh -
@@ -66,7 +70,7 @@ systemctl start rke2-agent.service
 
 
 
-## Install additional Server Node
+### Install additional Server Node
 
 ```
 curl -sfL https://get.rke2.io | INSTALL_RKE2_TYPE="server" sh -
@@ -93,7 +97,7 @@ systemctl status rke2-server.service
 
 
 
-# Add Kubectl to PATH
+### Add Kubectl to PATH
 
 configuration for connecting the k8s cluster 
 
@@ -107,7 +111,7 @@ source ~/.bashrc
 
 
 
-# RKE2 Remove Node 
+### RKE2 Remove Node 
 
 Run on the node to be removed:
 
@@ -126,7 +130,7 @@ kubectl delete node [node name]
 ```
 
 
-# Manually Remove the Built-in NGINX Ingress Deployment
+### Manually Remove the Built-in NGINX Ingress Deployment
 
 ```
 kubectl delete namespace kube-system --ignore-not-found=true
@@ -148,7 +152,7 @@ sudo systemctl restart rke2-server
 kubectl get pods -A | grep ingress
 ```
 
-## Drain and Reboot Node (If Necessary)
+### Drain and Reboot Node (If Necessary)
 
 ```
 kubectl drain $(hostname) --ignore-daemonsets --delete-local-data
@@ -160,7 +164,9 @@ kubectl get pods -A | grep ingress
 
   
   
-# 4. Install HELM 
+# 4. Basic Resources
+
+## Install HELM 
 
 ```
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
@@ -171,7 +177,7 @@ chmod 700 get_helm.sh
 ```
 
 
-# 4.3.1 Install Nginx Ingress with HELM 
+## Install Nginx Ingress with HELM 
 
 ```
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
@@ -188,7 +194,7 @@ helm install nginx-ingress ingress-nginx/ingress-nginx \
 ```  
 
   
-# Test Nginx Ingress 
+### Test Nginx Ingress 
 
 ```
 kubectl run nginx-pod --image=nginx --restart=Never --port=80 -n default
@@ -200,9 +206,9 @@ create file name: test-ingress.yaml
 
 
                          
-# 4.3.2 Add NFS Storage to the Cluster 
+## Add NFS Storage to the Cluster 
 
-## Install NFS Server on the host
+### Install NFS Server on the host
 
 ```
 sudo apt-get update
@@ -220,7 +226,7 @@ echo "/srv/nfs/kubedata *(rw,sync,no_subtree_check,no_root_squash)" | sudo tee -
 sudo exportfs -ra
 ```
 
-## Install NFS Client on Server\Agent node
+### Install NFS Client on Server\Agent node
 
 ```
 sudo apt-get update
@@ -228,7 +234,7 @@ sudo apt-get update
 sudo apt-get install nfs-common -y
 ```
 
-## 4.3.3 Create Storage Class
+### Create Storage Class
 
 create file name: rbac.yaml
   
@@ -244,7 +250,7 @@ kubectl apply -f deployment.yaml
 kubectl apply -f storage-class.yaml   
 ```
 
-## Test the Storage
+### Test the Storage
 
 create file name: test-pvc.yaml
 

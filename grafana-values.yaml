@@ -1,0 +1,36 @@
+grafana:
+  persistence:
+    enabled: true
+    storageClassName: k8s-sc  # Replace with your storage class
+    accessModes: ["ReadWriteOnce"]
+    size: 10Gi
+    type: pvc
+    finalizers:
+      - kubernetes.io/pvc-protection
+
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    paths:
+      - path: /grafana(/|$)(.*)
+        pathType: Prefix
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /$2
+    tls:
+      - secretName: monitoring-tls
+        hosts:
+          - 192.168.122.64  # Replace with your cluster IP
+          - 192.168.122.137
+          - 192.168.122.139
+
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+        - name: Prometheus
+          type: prometheus
+          url: http://prometheus-server
+          access: proxy
+          isDefault: true
+
+  adminPassword: "grafana123"  # Change this to a secure password

@@ -1,0 +1,30 @@
+prometheus:
+  prometheusSpec:
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: k8s-sc
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 50Gi
+    serviceMonitorSelector:
+      matchLabels:
+        release: prometheus
+
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    paths: ["/prometheus"]
+    pathType: Prefix
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /prometheus/$2
+      nginx.ingress.kubernetes.io/use-regex: "true"
+      nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+      nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    tls:
+      - secretName: monitoring-tls
+        hosts:
+          - 192.168.122.64
+          - 192.168.122.137
+          - 192.168.122.139

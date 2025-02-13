@@ -271,3 +271,50 @@ kubectl exec -it pvc-inspector -- sh
 
 kubectl cp rbac.yaml pvc-inspector:/data/
 ```
+
+
+
+# 5. Install Monitoring Resources
+
+## Create TLS Secret
+
+```
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+  -keyout tls.key -out tls.crt \
+  -subj "/CN=kubernetes" \
+  -addext "subjectAltName = IP:192.168.122.64,IP:192.168.122.137,IP:192.168.122.139"
+
+kubectl create secret tls monitoring-tls \
+  --key tls.key \
+  --cert tls.crt \
+  -n monitoring
+```
+
+
+## Install Prometheus and Grafana
+
+```
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo add grafana https://grafana.github.io/helm-charts
+helm repo update
+
+kubectl create namespace monitoring
+```
+
+create file name: prometheus-values.yaml
+
+create file name: grafana-values.yaml
+
+```
+helm install prometheus prometheus-community/kube-prometheus-stack \
+  -n monitoring \
+  -f prometheus-values.yaml
+
+helm install grafana grafana/grafana \
+  -n monitoring \
+  -f grafana-values.yaml
+
+kubectl get pods -n monitoring
+
+kubectl get ingress -n monitoring
+```

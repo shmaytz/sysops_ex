@@ -304,3 +304,25 @@ helm repo update
 helm install prometheus prometheus-community/prometheus\
   -n monitoring
 ```
+
+
+## Install ArgoCD
+```
+helm repo add argo https://argoproj.github.io/argo-helm  
+helm repo update
+```
+```
+kubectl create namespace argocd
+```
+```
+helm install argocd argo/argo-cd -n argocd
+```
+```
+kubectl get pods -n argocd
+```
+```
+kubectl get secret argocd-secret -n argocd -o jsonpath="{.data.admin\.password}" | base64 --decode
+```
+```
+kubectl port-forward svc/argocd-server -n argocd 8080:443
+```

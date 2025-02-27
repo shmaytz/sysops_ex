@@ -297,7 +297,6 @@ kubectl create secret tls monitoring-tls \
 
 ```
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-helm repo add grafana https://grafana.github.io/helm-charts
 helm repo update
 ```
 ```
@@ -318,11 +317,25 @@ kubectl create namespace argocd
 helm install argocd argo/argo-cd -n argocd
 ```
 ```
-kubectl get pods -n argocd
+kubectl get pods -n argocd -o wide
 ```
 ```
-kubectl get secret argocd-secret -n argocd -o jsonpath="{.data.admin\.password}" | base64 --decode
+kubectl get secrets -n argocd argocd-initial-admin-secret -o json | jq .data.password -r | base64 -d
 ```
 ```
 kubectl port-forward svc/argocd-server -n argocd 8080:443
+```
+
+### Install ArgoCD CLI
+
+```
+wget https://github.com/argoproj/argo-cd/releases/download/v2.14.2/argocd-linux-amd64
+```
+```
+mv argocd-linux-amd64 argocd
+chmod +x argocd
+mv argocd /usr/local/bin/
+```
+```
+argocd login [node ip:argocd-server port]
 ```

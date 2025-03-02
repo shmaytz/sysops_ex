@@ -339,3 +339,12 @@ mv argocd /usr/local/bin/
 ```
 argocd login [node ip:argocd-server port]
 ```
+
+### Use all partition size /dev/ubuntu-vg/ubuntu-lv
+
+```
+sudo lvdisplay /dev/ubuntu-vg/ubuntu-lv
+sudo lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv
+sudo resize2fs /dev/ubuntu-vg/ubuntu-lv
+df -h
+```

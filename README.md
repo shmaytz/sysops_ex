@@ -300,8 +300,18 @@ helm repo add prometheus-community https://prometheus-community.github.io/helm-c
 helm repo update
 ```
 ```
-helm install prometheus prometheus-community/prometheus\
-  -n monitoring
+helm pull prometheus-community/kube-prometheus-stack -d .
+mkdir kube-prometheus-stack-69.5.2
+tar -xvf kube-prometheus-stack-69.5.2.tgz -C kube-prometheus-stack-69.5.2/
+helm install prometheus Desktop/sysops_ex/kube-prometheus-stack-69.5.2/kube-prometheus-stack/ -n monitoring
+```
+
+### Create Ingress for Prometheus and Grafana
+
+create file name: prometheus-ingress.yaml
+
+```
+kubectl apply -f prometheus-ingress.yaml
 ```
 
 

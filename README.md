@@ -358,3 +358,20 @@ sudo lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv
 sudo resize2fs /dev/ubuntu-vg/ubuntu-lv
 df -h
 ```
+
+
+
+# 6. Install Logging Resources
+
+```
+kubectl create namespace kube-logging
+```
+```
+helm repo add elastic https://helm.elastic.co
+helm repo update
+```
+```
+helm pull elastic/elasticsearch -d .
+mkdir elasticsearch-8.5.1
+tar -xvf elasticsearch-8.5.1.tgz -C elasticsearch-8.5.1/
+```

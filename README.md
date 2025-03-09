@@ -374,4 +374,5 @@ helm repo update
 helm pull elastic/elasticsearch -d .
 mkdir elasticsearch-8.5.1
 tar -xvf elasticsearch-8.5.1.tgz -C elasticsearch-8.5.1/
+helm install elasticsearch Desktop/sysops_ex/elasticsearch-8.5.1/elasticsearch/ -n kube-logging
 ```
